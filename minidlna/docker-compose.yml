@@ -1,0 +1,30 @@
+services:
+  minidlna:
+    image: vladgh/minidlna
+    container_name: minidlna
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      MINIDLNA_MEDIA_DIR_1: "V,/media/movies"
+      MINIDLNA_MEDIA_DIR_2: "V,/media/tv"
+      MINIDLNA_FRIENDLY_NAME: "MyMini"
+    volumes:
+      - type: volume
+        source: movies
+        target: /media/movies
+      - type: volume
+        source: tv
+        target: /media/tv
+
+volumes:
+  movies:
+    driver_opts:
+      type: "nfs"
+      o: "addr=truenas1-nfs.torquasmvo.internal,nfsvers=4,ro"
+      device: ":/mnt/media/movies"
+
+  tv:
+    driver_opts:
+      type: "nfs"
+      o: "addr=truenas1-nfs.torquasmvo.internal,nfsvers=4,ro"
+      device: ":/mnt/media/tv"

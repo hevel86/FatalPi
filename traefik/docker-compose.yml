@@ -1,0 +1,7 @@
+services:
+  whoami:
+    container_name: whoami
+    image: traefik/whoami
+    restart: always
+    ports:
+      - "8080:80" # Maps port 8080 on your host to port 80 in the container
